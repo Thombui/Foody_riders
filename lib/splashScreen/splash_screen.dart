@@ -25,7 +25,7 @@ class _MySplashScreenState extends State<MySplashScreen>
       //If rider is loggedin already
       if(firebaseAuth.currentUser != null)
       {
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> const HomeScreen() ));
+        Navigator.push(context, MaterialPageRoute(builder: (c)=>  HomeScreen() ));
 
       }
       //If rider is NOT loggedin already
