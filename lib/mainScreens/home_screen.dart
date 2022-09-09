@@ -3,6 +3,7 @@ import 'package:foodpanda_riders_app/assistantMethods/get_current_location.dart'
 import 'package:foodpanda_riders_app/authentication/auth_screen.dart';
 import 'package:foodpanda_riders_app/global/global.dart';
 import 'package:foodpanda_riders_app/mainScreens/new_orders_screen.dart';
+import 'package:foodpanda_riders_app/mainScreens/parcel_in_progress_screen.dart';
 
 class HomeScreen extends StatefulWidget
 {
@@ -57,6 +58,8 @@ class _HomeScreenState extends State<HomeScreen>
             if(index == 1)
             {
               //Parcels in Progress
+              Navigator.push(context, MaterialPageRoute(builder: (c)=> ParcelInProgressScreen()));
+
             }
             if(index == 2)
             {
