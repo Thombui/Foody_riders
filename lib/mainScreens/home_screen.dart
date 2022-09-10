@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodpanda_riders_app/assistantMethods/get_current_location.dart';
 import 'package:foodpanda_riders_app/authentication/auth_screen.dart';
@@ -120,9 +121,32 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
     UserLocation uLocation = UserLocation();
     uLocation.getCurrentLocation();
+    getPerParcelDeliveryAmount();
+    getRiderPreviousEarnings();
+  }
+  getRiderPreviousEarnings()
+  {
+    FirebaseFirestore.instance
+        .collection("riders")
+        .doc(sharedPreferences!.getString("uid"))
+        .get().then((snap)
+    {
+      previousRiderEarnings = snap.data()!["earnings"].toString();
+
+    });
   }
 
 
+  getPerParcelDeliveryAmount()
+  {
+    FirebaseFirestore.instance
+        .collection("perDelivery")
+        .doc("thom123")
+        .get().then((snap)
+    {
+     perParcelDevliveryAmount =  snap.data()!["amount"].toString();
+    });
+  }
 
 
   @override
