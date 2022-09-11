@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:foodpanda_riders_app/assistantMethods/get_current_location.dart';
 import 'package:foodpanda_riders_app/authentication/auth_screen.dart';
 import 'package:foodpanda_riders_app/global/global.dart';
+import 'package:foodpanda_riders_app/mainScreens/earnings_screen.dart';
+import 'package:foodpanda_riders_app/mainScreens/history_screen.dart';
 import 'package:foodpanda_riders_app/mainScreens/new_orders_screen.dart';
+import 'package:foodpanda_riders_app/mainScreens/not_yet_delivered_screen.dart';
 import 'package:foodpanda_riders_app/mainScreens/parcel_in_progress_screen.dart';
 
 class HomeScreen extends StatefulWidget
@@ -65,15 +68,21 @@ class _HomeScreenState extends State<HomeScreen>
             if(index == 2)
             {
               // Not Yet Delivered
+              Navigator.push(context, MaterialPageRoute(builder: (c)=> NotYetDeliveredScreen()));
+
             }
             if(index == 3)
             {
               // History
+              Navigator.push(context, MaterialPageRoute(builder: (c)=> HistoryScreen()));
+
             }
 
             if(index == 4)
             {
               // Total Earnings
+              Navigator.push(context, MaterialPageRoute(builder: (c)=> EarningsScreen()));
+
             }
             if(index == 5)
             {
@@ -144,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen>
         .doc("thom123")
         .get().then((snap)
     {
-     perParcelDevliveryAmount =  snap.data()!["amount"].toString();
+     perParcelDeliveryAmount =  snap.data()!["amount"].toString();
     });
   }
 

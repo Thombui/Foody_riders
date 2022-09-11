@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodpanda_riders_app/assistantMethods/get_current_location.dart';
 import 'package:foodpanda_riders_app/global/global.dart';
+import 'package:foodpanda_riders_app/mainScreens/parcel_delivering_screen.dart';
 import 'package:foodpanda_riders_app/maps/map_utils.dart';
 
 class ParcelPickingScreen extends StatefulWidget
@@ -65,13 +66,13 @@ class _ParcelPickingScreenState extends State<ParcelPickingScreen>
       "lng": position!.longitude,
     });
 
-    Navigator.push(context, MaterialPageRoute(builder: (c)=> ParcelPickingScreen(
+    Navigator.push(context, MaterialPageRoute(builder: (c)=> ParcelDeliveringScreen(
       purchaserId: purchaserId,
       purchaserAddress: purchaserAddress,
       purchaserLat: purchaserLat,
       purchaserLng: purchaserLng,
       sellerId: sellerId,
-      getOrderID: getOrderId,
+      getOrderId: getOrderId,
     )));
 
   }

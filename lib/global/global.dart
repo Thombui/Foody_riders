@@ -11,7 +11,7 @@ Position? position;
 List<Placemark>? placeMarks;
 String completeAddress = " ";
 
-String perParcelDevliveryAmount = "";
+String perParcelDeliveryAmount = "";
 
 String previousEarnings = ""; // its is seller old total earnings
 String previousRiderEarnings = "";// its is rider old total earnings

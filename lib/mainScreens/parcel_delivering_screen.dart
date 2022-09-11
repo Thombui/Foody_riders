@@ -41,16 +41,16 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
 
   confirmParcelHasBeenDelivered(getOrderId, sellerId, purchaserId, purchaserAddress, purchaserLat, purchaserLng)
   {
-    String riderNewTotalEarningAmount = ((double.parse(previousRiderEarnings)) + (double.parse(perParcelDevliveryAmount))).toString();
-    
+    String riderNewTotalEarningAmount = ((double.parse(previousRiderEarnings)) + (double.parse(perParcelDeliveryAmount))).toString();
+
     FirebaseFirestore.instance
         .collection("orders")
         .doc(getOrderId).update({
-      "status": "delivering",
+      "status": "ended",
       "address": completeAddress,
       "lat": position!.latitude,
       "lng": position!.longitude,
-      "earnings": perParcelDevliveryAmount,// pay per parcel delivery amount
+      "earnings": perParcelDeliveryAmount,// pay per parcel delivery amount
     }).then((value) {
       FirebaseFirestore.instance
           .collection("riders")
@@ -59,8 +59,6 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
           {
             "earnings": riderNewTotalEarningAmount, // total earnings amount of rider
           });
-
-
     }).then((value)
     {
       FirebaseFirestore.instance
@@ -74,8 +72,9 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
     }).then((value)
     {
       FirebaseFirestore.instance
-          .collection("sellers")
-          .doc(purchaserId).collection("orders")
+          .collection("users")
+          .doc(purchaserId)
+          .collection("orders")
           .doc(getOrderId)
           .update(
           {
@@ -109,7 +108,8 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
   {
     FirebaseFirestore.instance
         .collection("sellers")
-        .doc(widget.sellerId).get().then((snap)
+        .doc(widget.sellerId)
+        .get().then((snap)
     {
       previousEarnings = snap.data()!["earnings"].toString();
     });
@@ -133,8 +133,8 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            "images/confirm1.png",
-            width: 350,
+            "images/confirm2.png",
+
           ),
 
           const SizedBox(height: 5,),
@@ -153,16 +153,12 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
                   'images/restaurant.png',
                   width: 50,
                 ),
-
-
                 const SizedBox(width: 7,),
-
-
                 Column(
                   children:const [
                     SizedBox(height: 12,),
                     Text(
-                      "Show Cafe/Restaurant Location",
+                      "Show Delivery Drop-off Location",
                       style: TextStyle(
                         fontFamily: "Signatra",
                         fontSize: 18,
@@ -184,7 +180,6 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
               child: InkWell(
                 onTap: ()
                 {
-
                   // rider location update
                   UserLocation uLocation = UserLocation();
                   uLocation.getCurrentLocation();
@@ -195,7 +190,8 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
                       widget.purchaserId,
                       widget.purchaserAddress,
                       widget.purchaserLat,
-                      widget.purchaserLng);
+                      widget.purchaserLng
+                  );
                 },
                 child: Container(
                   decoration: const BoxDecoration(
@@ -214,8 +210,8 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
                   height: 50,
                   child: const Center(
                     child: Text(
-                      "Order has been Delivered - Confirm",
-                      style: TextStyle(color: Colors.white, fontSize: 15.0),
+                      "Order has been Delivered- Confirm",
+                      style: TextStyle(color: Colors.black, fontSize: 15.0),
                     ),
                   ),
                 ),
