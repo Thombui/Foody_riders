@@ -49,11 +49,11 @@ class _AuthScreenState extends State<AuthScreen> {
             tabs: [
               Tab(
                 icon: Icon(Icons.lock, color: Colors.white,),
-                text: "Login",
+                text: "Đăng nhập",
               ),
               Tab(
                 icon: Icon(Icons.person, color: Colors.white,),
-                text: "Register",
+                text: "Đăng ký",
               )
             ],
             indicatorColor: Colors.white38,

@@ -20,7 +20,7 @@ class _MySplashScreenState extends State<MySplashScreen>
   
   startTimer()
   {
-    Timer(const Duration(seconds: 8), () async
+    Timer(const Duration(seconds: 1), () async
     {
       //If rider is loggedin already
       if(firebaseAuth.currentUser != null)
@@ -60,7 +60,7 @@ class _MySplashScreenState extends State<MySplashScreen>
              const Padding(
                padding: EdgeInsets.all(10.0),
                child: Text(
-                 "World's Largest Online Food App",
+                 "Foody - Giao hàng mọi lúc mọi nơi",
                  textAlign: TextAlign.center,
                  style: TextStyle(
                    color: Colors.black54,

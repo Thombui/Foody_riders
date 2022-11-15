@@ -88,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen>
           builder: (c)
           {
               return ErrorDialog(
-                message: "Please select an image.",
+                message: "Vui lòng chọn ảnh",
               );
           }
         );
@@ -105,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen>
             context: context,
             builder: (c){
               return LoadingDialog(
-                message: "Registering Account",
+                message: "Đang đăng ký tài khoản",
               );
             }
           );
@@ -129,7 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                 builder: (c)
                 {
                   return ErrorDialog(
-                    message: "Please write the complete requires info for Registration.",
+                    message: "Vui lòng viết đầy đủ thông tin yêu cầu để đăng ký.",
                   );
                 }
             );
@@ -142,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen>
             builder: (c)
             {
               return ErrorDialog(
-                message: "Password do not match",
+                message: "Password không khớp!",
               );
             }
         );
@@ -265,29 +265,30 @@ class _RegisterScreenState extends State<RegisterScreen>
                   CustomTextField(
                     data: Icons.lock,
                     controller: confirmPasswordController,
-                    hintText: "Confirm Password",
+                    hintText: "Xác nhận Password",
                     isObsecre: true,
                   ),
                   CustomTextField(
                     data: Icons.phone,
                     controller: phoneController,
-                    hintText: "Phone",
+                    hintText: "Số điện thoại",
                     isObsecre: false,
                   ),
                   CustomTextField(
                     data: Icons.my_location,
                     controller: locationController,
-                    hintText: "My current Address",
+                    hintText: "Vị trí của tôi",
                     isObsecre: false,
-                    enabled: false,
+                    enabled: true,
                   ),
                   Container(
                     width: 400,
                     height: 40,
                     alignment: Alignment.center,
+
                     child: ElevatedButton.icon(
                       label: const Text(
-                        "Get my current Location",
+                        "Lấy vị trị của tôi",
                         style: TextStyle(color: Colors.white),
                       ),
                       icon: const Icon(
@@ -312,7 +313,7 @@ class _RegisterScreenState extends State<RegisterScreen>
             const SizedBox(height: 30,),
             ElevatedButton(
               child: const Text(
-                "Sign Up",
+                "Đăng ký",
                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),
               ),
               style: ElevatedButton.styleFrom(

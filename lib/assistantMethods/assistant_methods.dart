@@ -22,6 +22,7 @@ separateOrdersItemIDs(orderIDs)
 
     separateItemIDsList.add(getItemId);
 
+
   }
 
   print("This is items List now = ");
@@ -113,6 +114,7 @@ separateOrderItemQuantities(orderIDs)
 
 
     print("\n This is Quantity Number  = " + quanNumber.toString());
+
 
     separateItemQuantitiesList.add(quanNumber.toString());
 

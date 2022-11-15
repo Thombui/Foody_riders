@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'global/global.dart';
 import 'splashScreen/splash_screen.dart';
@@ -7,6 +10,10 @@ import 'splashScreen/splash_screen.dart';
 Future<void> main() async
 {
   WidgetsFlutterBinding.ensureInitialized();
+
+  ByteData data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
+
 
   sharedPreferences = await SharedPreferences.getInstance();
 

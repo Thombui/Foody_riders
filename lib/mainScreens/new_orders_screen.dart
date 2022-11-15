@@ -23,7 +23,7 @@ class _NewOrdersScreenState extends State<NewOrdersScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: SimpleAppBar(title: "New Orders",),
+        appBar: SimpleAppBar(title: "Đơn hàng mới",),
         body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection("orders")

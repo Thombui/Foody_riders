@@ -42,6 +42,7 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
   confirmParcelHasBeenDelivered(getOrderId, sellerId, purchaserId, purchaserAddress, purchaserLat, purchaserLng)
   {
     String riderNewTotalEarningAmount = ((double.parse(previousRiderEarnings)) + (double.parse(perParcelDeliveryAmount))).toString();
+    //orderTotalSeller();
 
     FirebaseFirestore.instance
         .collection("orders")
@@ -104,6 +105,19 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
     });
   }
 
+  // orderTotalSeller()
+  // {
+  //   print("Cho Quang");
+  //
+  //   FirebaseFirestore.instance.collection("orders").get().then((QuerySnapshot querySnapshot)
+  //   {
+  //     querySnapshot.docs.forEach((doc) {
+  //       print(doc["productIds"]);
+  //     });
+  //   } );
+  // }
+
+
   getSellerData()
   {
     FirebaseFirestore.instance
@@ -128,7 +142,8 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body:
+      Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -158,7 +173,7 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
                   children:const [
                     SizedBox(height: 12,),
                     Text(
-                      "Show Delivery Drop-off Location",
+                      "Xem địa chỉ khách hàng",
                       style: TextStyle(
                         fontFamily: "Signatra",
                         fontSize: 18,
@@ -210,7 +225,7 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
                   height: 50,
                   child: const Center(
                     child: Text(
-                      "Order has been Delivered- Confirm",
+                      "Đơn hàng đã được giao- Xác nhận",
                       style: TextStyle(color: Colors.black, fontSize: 15.0),
                     ),
                   ),

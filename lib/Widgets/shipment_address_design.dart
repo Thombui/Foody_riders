@@ -63,7 +63,7 @@ class ShipmentAddressDesign extends StatelessWidget
         const Padding(
           padding: EdgeInsets.all(10.0),
           child: Text(
-            'Shipping Details: ',
+            'Thông tin khách hàng: ',
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
@@ -71,14 +71,14 @@ class ShipmentAddressDesign extends StatelessWidget
           height: 6.0,
         ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 90, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 5),
           width: MediaQuery.of(context).size.width,
           child: Table(
             children: [
               TableRow(
                 children: [
                   const Text(
-                    "Name",
+                    "Tên khách hàng: ",
                     style: TextStyle(color: Colors.black),
                   ),
                   Text(model!.name!),
@@ -87,10 +87,19 @@ class ShipmentAddressDesign extends StatelessWidget
               TableRow(
                 children: [
                   const Text(
-                    "Phone Number",
+                    "Số điện thoại: ",
                     style: TextStyle(color: Colors.black),
                   ),
                   Text(model!.phoneNumber!),
+                ],
+              ),
+              TableRow(
+                children: [
+                  const Text(
+                    "Địa chỉ: ",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  Text(model!.fullAddress!),
                 ],
               ),
             ],
@@ -99,19 +108,12 @@ class ShipmentAddressDesign extends StatelessWidget
         const SizedBox(
           height: 20,
         ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            model!.fullAddress!,
-            textAlign: TextAlign.justify,
-          ),
-        ),
 
         orderStatus == "ended"
             ? Container()
             :  Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Center(
+            padding: const EdgeInsets.all(10.0),
+            child: Center(
             child: InkWell(
               onTap: ()
               {
@@ -137,7 +139,7 @@ class ShipmentAddressDesign extends StatelessWidget
                 height: 50,
                 child: const Center(
                   child: Text(
-                    "Confirm - To Delivered this Parcel",
+                    "Xác nhận - Để giao Bưu kiện này",
                     style: TextStyle(color: Colors.white, fontSize: 15.0),
                   ),
                 ),
@@ -171,7 +173,7 @@ class ShipmentAddressDesign extends StatelessWidget
                 height: 50,
                 child: const Center(
                   child: Text(
-                    "Go Back",
+                    "Quay lại",
                     style: TextStyle(color: Colors.white, fontSize: 15.0),
                   ),
                 ),

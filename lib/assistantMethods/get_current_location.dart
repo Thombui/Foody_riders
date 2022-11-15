@@ -5,9 +5,6 @@ import 'package:geolocator/geolocator.dart';
 
 class UserLocation
 {
-
-
-
   getCurrentLocation() async
   {
     LocationPermission permission;

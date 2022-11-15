@@ -115,7 +115,7 @@ class _ParcelPickingScreenState extends State<ParcelPickingScreen>
                   children:const [
                      SizedBox(height: 12,),
                      Text(
-                      "Show Cafe/Restaurant Location",
+                      "Xem địa chỉ Cafe/Restaurant",
                       style: TextStyle(
                         fontFamily: "Signatra",
                         fontSize: 18,
@@ -165,7 +165,7 @@ class _ParcelPickingScreenState extends State<ParcelPickingScreen>
                   height: 50,
                   child: const Center(
                     child: Text(
-                      "Order has been Picked - Confirmed",
+                      "Đơn hàng đã được giao- Xác nhận",
                       style: TextStyle(color: Colors.white, fontSize: 15.0),
                     ),
                   ),

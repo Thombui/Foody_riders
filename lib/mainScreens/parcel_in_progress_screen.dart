@@ -23,7 +23,7 @@ class _ParcelInProgressScreenState extends State<ParcelInProgressScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: SimpleAppBar(title: "Parcel In Progress",),
+        appBar: SimpleAppBar(title: "Nhà hàng Go",),
         body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection("orders")

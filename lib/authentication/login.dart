@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodpanda_riders_app/Widgets/custom_text_field.dart';
 import 'package:foodpanda_riders_app/Widgets/error_dialog.dart';
 import 'package:foodpanda_riders_app/Widgets/loading_dialog.dart';
@@ -36,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen>
         builder: (c)
         {
           return ErrorDialog(
-            message: "Please write email/password.",
+            message: "Vui lòng viết email/password.",
           );
         }
       );
@@ -50,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen>
         builder: (c)
         {
           return LoadingDialog(
-            message: "Checking Credentials",
+            message: "Đang kiểm tra thông tin đăng nhập",
           );
         }
     );
@@ -86,10 +87,20 @@ class _LoginScreenState extends State<LoginScreen>
         .get().then((snapshot) async{
           if(snapshot.exists)
           {
-            await sharedPreferences!.setString("uid", currentUser.uid);
-            await sharedPreferences!.setString("email", snapshot.data()!["riderEmail"]);
-            await sharedPreferences!.setString("name", snapshot.data()!["riderName"]);
-            await sharedPreferences!.setString("photoUrl", snapshot.data()!["riderAvatarUrl"]);
+            if(snapshot.data()!["status"] == "approved")
+            {
+              await sharedPreferences!.setString("uid", currentUser.uid);
+              await sharedPreferences!.setString("email", snapshot.data()!["riderEmail"]);
+              await sharedPreferences!.setString("name", snapshot.data()!["riderName"]);
+              await sharedPreferences!.setString("photoUrl", snapshot.data()!["riderAvatarUrl"]);
+            }
+            else
+            {
+              firebaseAuth.signOut();
+              Navigator.pop(context);
+              Fluttertoast.showToast(msg: "Tài khoản của bạn đã bị block. \n\nLiên hệ Mail: admin1@foodapp.com");
+            }
+
 
             Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (c)=> HomeScreen()));
@@ -106,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen>
                 builder: (c)
                 {
                   return ErrorDialog(
-                    message: "No record exists",
+                    message: "Bản ghi không tồn tại",
                   );
                 }
             );
@@ -153,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen>
           ),
           ElevatedButton(
             child: const Text(
-              "Login",
+              "Đăng nhập",
               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),
             ),
             style: ElevatedButton.styleFrom(

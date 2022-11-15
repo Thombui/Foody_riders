@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodpanda_riders_app/assistantMethods/get_current_location.dart';
 import 'package:foodpanda_riders_app/authentication/auth_screen.dart';
 import 'package:foodpanda_riders_app/global/global.dart';
@@ -8,6 +9,7 @@ import 'package:foodpanda_riders_app/mainScreens/history_screen.dart';
 import 'package:foodpanda_riders_app/mainScreens/new_orders_screen.dart';
 import 'package:foodpanda_riders_app/mainScreens/not_yet_delivered_screen.dart';
 import 'package:foodpanda_riders_app/mainScreens/parcel_in_progress_screen.dart';
+import 'package:foodpanda_riders_app/splashScreen/splash_screen.dart';
 
 class HomeScreen extends StatefulWidget
 {
@@ -123,15 +125,37 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
   }
+  restrictBlockedRidersFromUsingApp() async
+  {
+    await FirebaseFirestore.instance.collection("riders")
+        .doc(firebaseAuth.currentUser!.uid)
+        .get().then((snapshot) {
+      if (snapshot.data()!["status"] != "approved") {
+        Fluttertoast.showToast(msg: "Tài khoản của bạn đã bị chặn");
+
+        firebaseAuth.signOut();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => const MySplashScreen()));
+      }
+      else
+      {
+
+        UserLocation uLocation = UserLocation();
+        uLocation.getCurrentLocation();
+        getPerParcelDeliveryAmount();
+        getRiderPreviousEarnings();
+
+      }
+    });
+  }
+
 
   @override
-  void initState() {
+  void initState()
+  {
+    restrictBlockedRidersFromUsingApp();
 
-    super.initState();
-    UserLocation uLocation = UserLocation();
-    uLocation.getCurrentLocation();
-    getPerParcelDeliveryAmount();
-    getRiderPreviousEarnings();
+
   }
   getRiderPreviousEarnings()
   {
@@ -177,9 +201,9 @@ class _HomeScreenState extends State<HomeScreen>
           ),
         ),
         title: Text(
-          "Welcome ${sharedPreferences!.getString("name")!}",
+          "Wellcome ${sharedPreferences!.getString("name")!}",
           style: const TextStyle(
-            fontSize: 25.0,
+            fontSize: 30.0,
             color: Colors.black,
             fontFamily: "Signatra",
             letterSpacing: 2,
@@ -194,12 +218,12 @@ class _HomeScreenState extends State<HomeScreen>
           crossAxisCount: 2,
           padding: const EdgeInsets.all(2),
           children: [
-            makeDashboardItem("New Available Orders", Icons.assessment,0),
-            makeDashboardItem("Parcels in Progress", Icons.airport_shuttle,1),
-            makeDashboardItem("Not Yet Delivered", Icons.location_history,2),
-            makeDashboardItem("History", Icons.done_all,3),
-            makeDashboardItem("Total Earnings", Icons.monetization_on,4),
-            makeDashboardItem("Logout", Icons.logout,5),
+            makeDashboardItem("Đơn hàng mới", Icons.assessment,0),
+            makeDashboardItem("Nhà hàng Go", Icons.airport_shuttle,1),
+            makeDashboardItem("Khách hàng Go", Icons.location_history,2),
+            makeDashboardItem("Lịch sử đơn hàng", Icons.done_all,3),
+            makeDashboardItem("Doanh thu", Icons.monetization_on,4),
+            makeDashboardItem("Đăng xuất", Icons.logout,5),
 
 
           ],
