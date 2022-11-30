@@ -49,7 +49,7 @@ class _EarningsScreenState extends State<EarningsScreen>
             children: [
 
               Text(
-                "€$previousRiderEarnings",
+                "$previousRiderEarnings Đ",
                 style: const TextStyle(
                   fontSize: 80,
                   color: Colors.black,

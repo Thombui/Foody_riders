@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen>
             : const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.redAccent,
+                Colors.red,
                 Colors.amber,
               ],
               begin:  FractionalOffset((0.0), 0.0),
@@ -113,7 +113,8 @@ class _HomeScreenState extends State<HomeScreen>
                 child: Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
+                    fontFamily: "Regular",
                     color: Colors.black,
                   ),
                 ),
@@ -203,8 +204,8 @@ class _HomeScreenState extends State<HomeScreen>
         title: Text(
           "Wellcome ${sharedPreferences!.getString("name")!}",
           style: const TextStyle(
-            fontSize: 30.0,
-            color: Colors.black,
+            fontSize: 35.0,
+            color: Colors.white,
             fontFamily: "Signatra",
             letterSpacing: 2,
           ),
@@ -221,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen>
             makeDashboardItem("Đơn hàng mới", Icons.assessment,0),
             makeDashboardItem("Nhà hàng Go", Icons.airport_shuttle,1),
             makeDashboardItem("Khách hàng Go", Icons.location_history,2),
-            makeDashboardItem("Lịch sử đơn hàng", Icons.done_all,3),
+            makeDashboardItem("Lịch sử giao hàng", Icons.done_all,3),
             makeDashboardItem("Doanh thu", Icons.monetization_on,4),
             makeDashboardItem("Đăng xuất", Icons.logout,5),
 

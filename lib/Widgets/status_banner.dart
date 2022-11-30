@@ -55,8 +55,8 @@ class StatusBanner extends StatelessWidget
           Text(
             orderStatus == "ended"
                 ? "Đã giao hàng $message"
-                : "Đã đặt hàng $message",
-            style: const TextStyle(color: Colors.white),
+                : "Đặt hàng $message",
+            style: const TextStyle(color: Colors.white, fontSize: 20),
           ),
           const SizedBox(
             width: 5,

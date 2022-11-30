@@ -27,7 +27,7 @@ class _NotYetDeliveredScreenState extends State<NotYetDeliveredScreen>
           stream: FirebaseFirestore.instance
               .collection("orders")
               .where("riderUID", isEqualTo: sharedPreferences!.getString("uid"))
-              .where("status", isEqualTo: "delivering")             
+              .where("status", isEqualTo: "Đang giao hàng")
               .snapshots(),
           builder: (c, snapshot)
           {

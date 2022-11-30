@@ -25,32 +25,45 @@ class ShipmentAddressDesign extends StatelessWidget
   });
 
 
+  //Xác nhận nhận giao đơn hàng này
   confirmedParcelShipment(BuildContext context, String getOrderID, String sellerID, String purchaserID)
   {
-    FirebaseFirestore.instance
+    FirebaseFirestore.instance.collection("users")
+        .doc(purchaserID)
         .collection("orders")
-        .doc(getOrderID)
-        .update({
+        .doc(getOrderID).update({
       "riderUID": sharedPreferences!.getString("uid"),
       "reiderName": sharedPreferences!.getString("name"),
-      "status": "picking",
+      "status": "Chờ lấy hàng",
       "lat": position!.latitude,
       "lng": position!.longitude,
       "address": completeAddress,
+    }).then((value)
+    {
+       FirebaseFirestore.instance
+          .collection("orders")
+          .doc(getOrderID)
+          .update({
+        "riderUID": sharedPreferences!.getString("uid"),
+        "reiderName": sharedPreferences!.getString("name"),
+        "status": "Chờ lấy hàng",
+        "lat": position!.latitude,
+        "lng": position!.longitude,
+        "address": completeAddress,
+      });
+
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ParcelPickingScreen(
+            purchaserId: purchaserID,
+            purchaserAddress : model!.fullAddress,
+            purchaserLat: model!.lat,
+            purchaserLng: model!.lng,
+            sellerId: sellerID,
+            getOrderID: getOrderID,
+          )));
+
     });
-
-
     // send rider to shipmentScreen
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ParcelPickingScreen(
-      purchaserId: purchaserID,
-      purchaserAddress : model!.fullAddress,
-      purchaserLat: model!.lat,
-      purchaserLng: model!.lng,
-      sellerId: sellerID,
-      getOrderID: getOrderID,
-    )));
-
-
   }
 
 
@@ -108,8 +121,7 @@ class ShipmentAddressDesign extends StatelessWidget
         const SizedBox(
           height: 20,
         ),
-
-        orderStatus == "ended"
+        orderStatus == "Giao thành công"
             ? Container()
             :  Padding(
             padding: const EdgeInsets.all(10.0),
@@ -119,7 +131,6 @@ class ShipmentAddressDesign extends StatelessWidget
               {
                 UserLocation uLocation = UserLocation();
                 uLocation.getCurrentLocation();
-                
                 confirmedParcelShipment(context, orderId!, sellerId!, orderByUser!);
               },
               child: Container(

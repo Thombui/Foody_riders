@@ -55,15 +55,29 @@ class _ParcelPickingScreenState extends State<ParcelPickingScreen>
     getSellerData();
   }
 
+  //Xác nhận lấy hàng thành công
   confirmParcelHasBeenPicked(getOrderId, sellerId, purchaserId, purchaserAddress, purchaserLat, purchaserLng)
   {
-    FirebaseFirestore.instance
+    // ignore: avoid_single_cascade_in_expression_statements
+    FirebaseFirestore.instance.collection("users")
+        .doc(purchaserId)
         .collection("orders")
         .doc(getOrderId).update({
-      "status": "delivering",
+      "status": "Đang giao hàng",
       "address": completeAddress,
       "lat": position!.latitude,
       "lng": position!.longitude,
+    }).then((value)
+    {
+      FirebaseFirestore.instance
+          .collection("orders")
+          .doc(getOrderId).update({
+        "status": "Đang giao hàng",
+        "address": completeAddress,
+        "lat": position!.latitude,
+        "lng": position!.longitude,
+      });
+
     });
 
     Navigator.push(context, MaterialPageRoute(builder: (c)=> ParcelDeliveringScreen(
@@ -115,10 +129,10 @@ class _ParcelPickingScreenState extends State<ParcelPickingScreen>
                   children:const [
                      SizedBox(height: 12,),
                      Text(
-                      "Xem địa chỉ Cafe/Restaurant",
+                      "Xem địa chỉ nhà hàng",
                       style: TextStyle(
-                        fontFamily: "Signatra",
-                        fontSize: 18,
+                       fontFamily: "Regular",
+                        fontSize: 16,
                         letterSpacing: 2,
                       ),
                     ),
@@ -165,7 +179,7 @@ class _ParcelPickingScreenState extends State<ParcelPickingScreen>
                   height: 50,
                   child: const Center(
                     child: Text(
-                      "Đơn hàng đã được giao- Xác nhận",
+                      "Lấy hàng thành công - Xác nhận",
                       style: TextStyle(color: Colors.white, fontSize: 15.0),
                     ),
                   ),

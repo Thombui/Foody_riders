@@ -97,16 +97,16 @@ Widget placeOrderDesignWidget(Items model, BuildContext context, seperateQuantit
                     const SizedBox(
                       width: 10,
                     ),
-                    const Text(
-                      "€ ",
-                      style:  TextStyle(fontSize: 16.0, color: Colors.blue),
-                    ),
                     Text(
                       model.price.toString(),
                       style: const TextStyle(
                         color: Colors.blue,
                         fontSize: 18.0,
                       ),
+                    ),
+                    const Text(
+                      " Đ",
+                      style:  TextStyle(fontSize: 16.0, color: Colors.blue),
                     ),
                   ],
                 ),

@@ -49,12 +49,13 @@ class _MySplashScreenState extends State<MySplashScreen>
   Widget build(BuildContext context) {
     return Material(
       child: Container(
-        color: Colors.white,
+
+        color: Colors.white38,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("images/logo.png"),
+              Image.asset("images/service.jpg"),
               const SizedBox(height: 10,),
 
              const Padding(
@@ -64,8 +65,8 @@ class _MySplashScreenState extends State<MySplashScreen>
                  textAlign: TextAlign.center,
                  style: TextStyle(
                    color: Colors.black54,
-                   fontSize: 24,
-                   fontFamily: "Signatra",
+                   fontSize: 30,
+                   fontFamily: "Regular",
                    letterSpacing: 3,
                  ),
                ),

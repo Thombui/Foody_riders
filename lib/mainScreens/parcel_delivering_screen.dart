@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodpanda_riders_app/Widgets/error_dialog.dart';
 import 'package:foodpanda_riders_app/assistantMethods/get_current_location.dart';
 import 'package:foodpanda_riders_app/global/global.dart';
+import 'package:foodpanda_riders_app/mainScreens/home_screen.dart';
 import 'package:foodpanda_riders_app/mainScreens/parcel_picking_screen.dart';
 import 'package:foodpanda_riders_app/maps/map_utils.dart';
 import 'package:foodpanda_riders_app/splashScreen/splash_screen.dart';
@@ -39,19 +44,22 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
 
   String orderTotalAmount = "";
 
+  //Xác nhận đã giao hàng thành công
   confirmParcelHasBeenDelivered(getOrderId, sellerId, purchaserId, purchaserAddress, purchaserLat, purchaserLng)
   {
+    String endedTime = DateTime.now().millisecondsSinceEpoch.toString();
     String riderNewTotalEarningAmount = ((double.parse(previousRiderEarnings)) + (double.parse(perParcelDeliveryAmount))).toString();
     //orderTotalSeller();
 
     FirebaseFirestore.instance
         .collection("orders")
         .doc(getOrderId).update({
-      "status": "ended",
+      "status": "Giao thành công",
       "address": completeAddress,
       "lat": position!.latitude,
       "lng": position!.longitude,
       "earnings": perParcelDeliveryAmount,// pay per parcel delivery amount
+      "endedTime": endedTime,
     }).then((value) {
       FirebaseFirestore.instance
           .collection("riders")
@@ -79,14 +87,43 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
           .doc(getOrderId)
           .update(
           {
-            "status": "ended",
+            "status": "Giao thành công",
             "riderUID": sharedPreferences!.getString("uid"),
+            "endedTime": endedTime,
           });
     });
 
     Navigator.push(context, MaterialPageRoute(builder: (c)=>const MySplashScreen()));
 
   }
+
+  orderHasBeenCancel(getOrderId, purchaserId)
+  {
+        FirebaseFirestore.instance.collection("users")
+            .doc(purchaserId)
+            .collection("orders")
+            .doc(getOrderId)
+            .update({
+          "status": "Người mua hủy đơn",
+        })
+            .then((snapshot)
+        {
+          FirebaseFirestore.instance
+              .collection("orders")
+              .doc(getOrderId)
+              .update({
+            "status": "Người mua hủy đơn",
+          });
+
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          Fluttertoast.showToast(msg: "Đơn hàng bị được hủy bởi người mua");
+        }
+        );
+
+    // send rider to shipmentScreen
+  }
+
 
   getOrderTotalAmount()
   {
@@ -104,18 +141,6 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
       getSellerData();
     });
   }
-
-  // orderTotalSeller()
-  // {
-  //   print("Cho Quang");
-  //
-  //   FirebaseFirestore.instance.collection("orders").get().then((QuerySnapshot querySnapshot)
-  //   {
-  //     querySnapshot.docs.forEach((doc) {
-  //       print(doc["productIds"]);
-  //     });
-  //   } );
-  // }
 
 
   getSellerData()
@@ -142,6 +167,7 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body:
       Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -149,6 +175,7 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
         children: [
           Image.asset(
             "images/confirm2.png",
+            width: 380,
 
           ),
 
@@ -165,7 +192,7 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'images/restaurant.png',
+                  'images/home.png',
                   width: 50,
                 ),
                 const SizedBox(width: 7,),
@@ -175,7 +202,7 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
                     Text(
                       "Xem địa chỉ khách hàng",
                       style: TextStyle(
-                        fontFamily: "Signatra",
+                        fontFamily: "Regular",
                         fontSize: 18,
                         letterSpacing: 2,
                       ),
@@ -225,8 +252,41 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen>
                   height: 50,
                   child: const Center(
                     child: Text(
-                      "Đơn hàng đã được giao- Xác nhận",
-                      style: TextStyle(color: Colors.black, fontSize: 15.0),
+                      "Giao hàng thành công - Xác nhận",
+                      style: TextStyle(color: Colors.white, fontSize: 15.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Center(
+              child: InkWell(
+                onTap: ()
+                {
+                  orderHasBeenCancel(widget.getOrderId, widget.purchaserId);
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.cyan,
+                          Colors.amber,
+                        ],
+                        begin:  FractionalOffset((0.0), 0.0),
+                        end:  FractionalOffset(1.0, 0.0),
+                        stops: [0.0,1.0],
+                        tileMode: TileMode.clamp,
+                      )
+                  ),
+                  width: MediaQuery.of(context).size.width -90,
+                  height: 50,
+                  child: const Center(
+                    child: Text(
+                      "Giao hàng không thành công",
+                      style: TextStyle(color: Colors.white, fontSize: 15.0),
                     ),
                   ),
                 ),

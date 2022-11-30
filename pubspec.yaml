@@ -98,3 +98,8 @@ flutter:
       fonts:
         - asset: assets/fonts/Signatra.ttf
 
+    - family: Regular
+      fonts:
+        - asset: assets/fonts/Lobster-Regular.ttf
+
+

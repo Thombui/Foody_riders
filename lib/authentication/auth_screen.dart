@@ -35,7 +35,7 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           automaticallyImplyLeading: false,
           title: const Text(
-              "iFood",
+              "Foody",
               style: TextStyle(
                   fontSize: 60,
                   color: Colors.white,
@@ -61,7 +61,7 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
         ),
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,

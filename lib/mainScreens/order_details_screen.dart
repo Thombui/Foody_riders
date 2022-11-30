@@ -49,8 +49,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
     getOrderInfo();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +82,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "€ ${dataMap["totalAmount"]}",
+                                "Tổng tiền đơn hàng: ${dataMap["totalAmount"]} Đ",
                                 style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
@@ -95,22 +93,37 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "Order Id = ${widget.orderID!}",
+                              "Mã vận đơn: ${widget.orderID!}",
                               style: const TextStyle(fontSize: 16),
                             ),
                           ),
+
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "Order at: ${DateFormat("dd MMMM, yyyy -  hh:mm aa")
+                              "Thời gian đặt hàng: ${DateFormat("dd MMMM, yyyy -  hh:mm aa")
                                   .format(DateTime.fromMillisecondsSinceEpoch(int.parse(dataMap["orderTime"])))}",
-                              style: const TextStyle(fontSize: 16, color: Colors.grey),
+                              style: const TextStyle(fontSize: 16, color: Colors.black),
                             ),
                           ),
+
+                          orderStatus == "Giao thành công"
+                          ?
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Thời gian giao hàng: ${DateFormat("dd MMMM, yyyy -  hh:mm aa")
+                                  .format(DateTime.fromMillisecondsSinceEpoch(int.parse(dataMap["endedTime"])))}",
+                              style: const TextStyle(fontSize: 16, color: Colors.black),
+                            ),
+                          )
+                          :
+                              Text(""),
+
                           const Divider(thickness: 4,),
-                          orderStatus == "ended"
+                          orderStatus == "Giao thành công"
                               ? Image.asset("images/success.jpg")
-                              : Image.asset("images/confirm_pick.png"),
+                              : Image.asset("images/food-delivery-service-vector.jpg"),
                           const Divider(thickness: 4,),
                           FutureBuilder<DocumentSnapshot>(
                             future: FirebaseFirestore.instance

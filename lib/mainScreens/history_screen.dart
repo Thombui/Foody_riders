@@ -22,12 +22,12 @@ class _HistoryScreenState extends State<HistoryScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: SimpleAppBar(title: "History",),
+        appBar: SimpleAppBar(title: "Lịch sử giao hàng",),
         body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection("orders")
               .where("riderUID", isEqualTo: sharedPreferences!.getString("uid"))
-              .where("status", isEqualTo: "ended")
+              .where("status", isEqualTo: "Giao thành công")
               .snapshots(),
           builder: (c, snapshot)
           {
